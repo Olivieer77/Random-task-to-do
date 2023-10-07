@@ -38,18 +38,16 @@ const tasks = {
         "Read a book for 30 minutes",
     ],
     
-     learning:  [
+     study:  [
         "Nauka obcego języka",
         "Znajdź nowy przepis i przygotuj nowe danie.",
     ],
-    
 }
 
-const generateRandomTask = () => {
-    const categorySelect = document.getElementById("categorySelect");
-    const selectedCategory = categorySelect.value;
+const customTasks = []
 
-    const categoryTasks = tasks[selectedCategory];
+function generateRandomTask(category = "all") {
+    const categoryTasks = tasks[category];
     if (!categoryTasks) return;
 
     const randomIndex = Math.floor(Math.random() * categoryTasks.length);
@@ -57,7 +55,69 @@ const generateRandomTask = () => {
     document.querySelector(".task").textContent = randomTask;
 }
 
-const generateButton = document.querySelector(".generateRandomTask");
-generateButton.addEventListener("click", generateRandomTask);
+const categoryButtons = document.querySelectorAll(".category-button");
+categoryButtons.forEach(button => {
+    button.addEventListener("click", event => {
+        const selectedCategory = event.target.getAttribute("data-category");
+        generateRandomTask(selectedCategory);
+    })
+});
 
-generateRandomTask();
+// generateRandomTask(); 
+
+const expandCategory = document.querySelector('.category-expand')
+expandCategory.addEventListener('click', () => {
+    categoryButtons.forEach(e => {
+        e.classList.toggle('visible')
+    })
+})
+
+
+const customTaskInput = document.getElementById("customTaskInput");
+const customTaskList = document.getElementById('customTaskList')
+const addCustomTaskButton = document.getElementById("addCustomTask");
+
+const addCustomTaskToList = (taskText) => {
+    const customTaskElement = document.createElement('li')
+    customTaskElement.textContent = taskText;
+    
+    const deleteIcon = document.createElement("span");
+    deleteIcon.textContent = "🗑️"; 
+    deleteIcon.className = "delete-icon";
+    
+    deleteIcon.addEventListener("click", () => {
+        deleteCustomTask(taskText);
+        customTaskElement.remove();
+    });
+
+    customTaskList.appendChild(customTaskElement)
+    customTaskElement.appendChild(deleteIcon);
+}
+
+function deleteCustomTask(taskText) {
+    const taskIndex = customTasks.indexOf(taskText);
+    if (taskIndex !== -1) {
+        customTasks.splice(taskIndex, 1);
+    }
+}
+
+addCustomTaskButton.addEventListener('click', () => {
+    const taskText = customTaskInput.value.trim();
+    if (taskText && !customTasks.includes(taskText)) {
+        customTasks.push(taskText);
+        addCustomTaskToList(taskText);
+        customTaskInput.value = "";
+    }
+})
+
+customTaskList.addEventListener("click", (event) => {
+    if (event.target.tagName === "SPAN" && event.target.className === "delete-icon") {
+        const taskText = event.target.parentElement.textContent;
+        const taskIndex = customTasks.indexOf(taskText);
+        if (taskIndex !== -1) {
+            customTasks.splice(taskIndex, 1);
+            event.target.parentElement.remove();
+        }
+    }
+});
+

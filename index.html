@@ -4,19 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Task</title>
+    <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * { 
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wrapper {
+            text-align: center;
+            margin-top: 5rem;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .wrapper .category-expand {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .wrapper #roll-random-task {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .wrapper .rolledRandomTask {
+            display: flex;
+        }
+
+        .wrapper .rolledRandomTask p {
+            font-size: 1.1rem;
+        }
+
+        .wrapper .rolledRandomTask .description-paragraph {
+            margin-right: 0.4rem;
+        }
+
+        .category-button {
+            margin: 5px;
+            padding: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+
+        .visible {
+            display: inline-block;
+        }
+
+        .delete-icon {
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Tasks to do in free time</h1>
-    <label for="categorySelect">Wybierz Kategorię: </label>
-    <select id="categorySelect">
-        <option value="all">All</option>
-        <option value="fitness">Fitness</option>
-        <option value="creativity">Creativity</option>
-        <option value="rest">Rest</option>
-        <option value="learning">Learning</option>
-      </select>
-      <button class="generateRandomTask">Generate Task</button>
-      <p class="task"></p>
+    <div class="wrapper">
+        <h1>Tasks to do in free time</h1>
+        <div class="choose-category">
+            <button id="roll-random-task" class="category-button" data-category="all">Roll Random Task</button>
+            <button class="category-expand">Category +</button>
+        </div>
+        <div class="category-list">
+            <button class="category-button" data-category="fitness">Fitness</button>
+            <button class="category-button" data-category="creativity">Creativity</button>
+            <button class="category-button" data-category="rest">Rest</button>
+            <button class="category-button" data-category="study">Study</button>
+         </div>
+        <div class="rolledRandomTask">
+            <p class="description-paragraph">Rolled task:</p>
+            <p class="task">  </p>
+        </div>
+        <div id="customTasks">
+            <h2>Twoje Zadania</h2>
+            <ul id="customTaskList">
+            </ul>
+            <input type="text" id="customTaskInput" placeholder="Dodaj nowe zadanie">
+            <button id="addCustomTask">Dodaj</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
