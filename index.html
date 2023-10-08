@@ -76,8 +76,12 @@
             display: inline-block;
         }
 
-        .delete-icon {
+        .delete-icon, .edit-icon {
             cursor: pointer;
+        }
+
+        .err {
+            color: red;
         }
 
     </style>
@@ -98,14 +102,16 @@
         <div class="rolledRandomTask">
             <p class="description-paragraph">Rolled task:</p>
             <p class="task">  </p>
+            <button id="shareButton">Share</button>
         </div>
         <div id="customTasks">
             <h2>Twoje Zadania</h2>
             <ul id="customTaskList">
             </ul>
-            <input type="text" id="customTaskInput" placeholder="Dodaj nowe zadanie">
-            <button id="addCustomTask">Dodaj</button>
+            <input type="text" id="customTaskInput" placeholder="Add new task">
+            <button id="addCustomTask">Add</button>
         </div>
+        <p class="Add-error err"></p>
     </div>
 
     <script src="script.js"></script>
