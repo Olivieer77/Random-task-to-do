@@ -77,6 +77,7 @@ expandCategory.addEventListener('click', () => {
     });
 });
 
+// custom task
 function addCustomTaskToList(taskText) {
     const customTaskElement = document.createElement('li');
     customTaskElement.textContent = taskText;
@@ -97,30 +98,34 @@ function addCustomTaskToList(taskText) {
         }
     }
 
-    function editCustomTask(taskText, listItem) {
-        const newTaskText = prompt("Edytuj zadanie:", taskText);
+    function editCustomTask(oldTaskText, listItem) {
+        const newTaskText = prompt("Edytuj zadanie:", oldTaskText);
         if (newTaskText !== null) {
-            const taskIndex = customTasks.indexOf(taskText);
-            if (taskIndex !== -1) {
-                customTasks[taskIndex] = newTaskText;
-                listItem.textContent = newTaskText;
-
-                let deleteIcon = listItem.querySelector(".delete-icon");
-                let editIcon = listItem.querySelector(".edit-icon");
-
-                if (!deleteIcon) {
-                    deleteIcon = createIcon("🗑️", "delete-icon", () => {
-                        deleteCustomTask(newTaskText);
-                        listItem.remove();
-                    });
-                    listItem.appendChild(deleteIcon);
-                }
-
-                if (!editIcon) {
-                    editIcon = createIcon("✏️", "edit-icon", () => {
-                        editCustomTask(newTaskText, listItem);
-                    });
-                    listItem.appendChild(editIcon);
+            if (customTasks.includes(newTaskText)) {
+                alert("Zadanie o tej nazwie już istnieje. Proszę wybrać inną nazwę.");
+            } else {
+                const taskIndex = customTasks.indexOf(oldTaskText);
+                if (taskIndex !== -1) {
+                    customTasks[taskIndex] = newTaskText;
+                    listItem.textContent = newTaskText;
+    
+                    let deleteIcon = listItem.querySelector(".delete-icon");
+                    let editIcon = listItem.querySelector(".edit-icon");
+    
+                    if (!deleteIcon) {
+                        deleteIcon = createIcon("🗑️", "delete-icon", () => {
+                            deleteCustomTask(newTaskText);
+                            listItem.remove();
+                        });
+                        listItem.appendChild(deleteIcon);
+                    }
+    
+                    if (!editIcon) {
+                        editIcon = createIcon("✏️", "edit-icon", () => {
+                            editCustomTask(newTaskText, listItem);
+                        });
+                        listItem.appendChild(editIcon);
+                    }
                 }
             }
         }
