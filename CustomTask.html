@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .delete-icon, .edit-icon, .complete-icon {
+            cursor: pointer;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Random Task</a></li>
+            <li><a href="CustomTask.html">Custom Task</a></li>
+        </ul>
+    </nav>
+    <div class="wrapper">
+        <div id="customTasks">
+            <h2>Your custom tasks</h2>
+            <ul id="customTaskList">
+            </ul>
+            <input type="text" id="customTaskInput" placeholder="Add new task">
+            <button id="addCustomTask">Add</button>
+        </div>
+        <p class="Add-error err"></p>
+    </div>
+    <script src="CustomTask.js"></script>
+</body>
+</html>

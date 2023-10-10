@@ -4,31 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Task</title>
+    <link rel="stylesheet" href="style.css">
     <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-        * { 
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
 
         .wrapper {
             text-align: center;
             margin-top: 5rem;
         }
 
-        li {
-            list-style: none;
-        }
 
         .wrapper .category-expand {
             display: inline-block;
@@ -38,6 +24,21 @@
             color: white;
             border: none;
             cursor: pointer;
+            align-items: center;
+        }
+
+        .category-expand .category-icon img {
+            vertical-align: middle;
+            width: 14px;
+            height: 14px;
+            margin-bottom: 1px;
+            margin-left: 1px;
+            transition: .3s;
+
+        }
+
+        .expanded .category-icon img {
+            transform: rotate(540deg);
         }
 
         .wrapper #roll-random-task {
@@ -52,6 +53,7 @@
 
         .wrapper .rolledRandomTask {
             display: flex;
+            justify-content: center;
         }
 
         .wrapper .rolledRandomTask p {
@@ -73,25 +75,23 @@
         }
 
         .visible {
-            display: inline-block;
-        }
-
-        .delete-icon, .edit-icon {
-            cursor: pointer;
-        }
-
-        .err {
-            color: red;
-        }
+    display: inline-block;
+}
 
     </style>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Random Task</a></li>
+            <li><a href="CustomTask.html">Custom Task</a></li>
+        </ul>
+    </nav>
     <div class="wrapper">
         <h1>Tasks to do in free time</h1>
         <div class="choose-category">
             <button id="roll-random-task" class="category-button" data-category="all">Roll Random Task</button>
-            <button class="category-expand">Category +</button>
+            <button class="category-expand">Category <span class="category-icon"><img src="https://i.imgur.com/KyCRoXn.png" alt=""></span></button>
         </div>
         <div class="category-list">
             <button class="category-button" data-category="fitness">Fitness</button>
@@ -104,14 +104,7 @@
             <p class="task">  </p>
             <button id="shareButton">Share</button>
         </div>
-        <div id="customTasks">
-            <h2>Twoje Zadania</h2>
-            <ul id="customTaskList">
-            </ul>
-            <input type="text" id="customTaskInput" placeholder="Add new task">
-            <button id="addCustomTask">Add</button>
-        </div>
-        <p class="Add-error err"></p>
+ 
     </div>
 
     <script src="script.js"></script>

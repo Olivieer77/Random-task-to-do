@@ -1,0 +1,38 @@
+* { 
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+nav {
+    margin-top: 2rem;
+}
+
+nav ul{
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    padding: 0.5rem 1.5rem;
+    list-style: none;
+}
+
+nav ul li a {
+    color: #000;
+    font-size: 1.15rem;
+    text-decoration: none;
+}
+
+
+.completed {
+    text-decoration: line-through;
+}
+
+.err {
+    color: red;
+}
