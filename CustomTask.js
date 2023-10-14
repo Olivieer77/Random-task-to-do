@@ -8,8 +8,9 @@ const AddError = document.querySelector('.Add-error');
 
 function addCustomTaskToList(taskText) {
     const customTaskElement = document.createElement('li');
-
-    const taskSpan = document.createElement('span')
+    customTaskElement.classList.add('custom-task')
+    const taskSpan = document.createElement('span');
+    taskSpan.classList.add('task-text')
     taskSpan.textContent = taskText;
 
     function createIcon(iconText, iconClass, clickHandler) {
@@ -29,6 +30,14 @@ function addCustomTaskToList(taskText) {
     }
 
     function editCustomTask(oldTaskText, listItem) {
+        let completeIcon = listItem.querySelector(".complete-icon");
+        if (!completeIcon) {
+            completeIcon = createIcon("✔️", "complete-icon", () => {
+                completeCustomTask(completeIcon);
+            });
+            listItem.appendChild(completeIcon);
+        }
+
         const newTaskText = prompt("Edytuj zadanie:", oldTaskText);
         if (newTaskText !== null) {
             if (customTasks.includes(newTaskText)) {
@@ -39,10 +48,15 @@ function addCustomTaskToList(taskText) {
                     customTasks[taskIndex] = newTaskText;
                     listItem.textContent = newTaskText;
     
-                    let deleteIcon = listItem.querySelector(".delete-icon");
                     let editIcon = listItem.querySelector(".edit-icon");
-                    let completeIcon = listItem.querySelector(".complete-icon");
-    
+                    let deleteIcon = listItem.querySelector(".delete-icon");
+                   
+                    if (!editIcon) {
+                        editIcon = createIcon("✏️", "edit-icon", () => {
+                            editCustomTask(newTaskText, listItem);
+                        });
+                        listItem.appendChild(editIcon);
+                    }
                     if (!deleteIcon) {
                         deleteIcon = createIcon("🗑️", "delete-icon", () => {
                             deleteCustomTask(newTaskText);
@@ -51,38 +65,57 @@ function addCustomTaskToList(taskText) {
                         listItem.appendChild(deleteIcon);
                     }
     
-                    if (!editIcon) {
-                        editIcon = createIcon("✏️", "edit-icon", () => {
-                            editCustomTask(newTaskText, listItem);
-                        });
-                        listItem.appendChild(editIcon);
-                    }
+                    
 
-                    if (!completeIcon) {
-                        completeIcon = createIcon("✔️", "complete-icon", () => {
-                            completeCustomTask();
-                        });
-                        listItem.appendChild(completeIcon);
-                    }
                 }
             }
         }
     }
 
+    let historyList = [];
+    let completedCustomTasks = [];
+
     function completeCustomTask(taskSpan) {
-        taskSpan.classList.toggle("completed");
+        if (!taskSpan.classList.contains("completed")) {
+            taskSpan.classList.add("completed");
+            customTaskElement.classList.add('completeBackground')
+            historyList.push(taskSpan.textContent);
+            completedCustomTasks.push(taskSpan.textContent);
+
+            updateCompletedCount();
+            displayTaskHistory();
+        }
     }
 
+    function updateCompletedCount() {
+        const completedCountElement = document.getElementById("completedCount");
+        completedCountElement.textContent = completedCustomTasks.length;
+    }
+
+    function displayTaskHistory() {
+        const historyListElement = document.getElementById("taskHistory");
+        historyListElement.innerHTML = "";
+    
+        for (const completedTask of completedCustomTasks) {
+            const historyItem = document.createElement("li");
+            historyItem.textContent = completedTask;
+            historyListElement.appendChild(historyItem);
+        }
+    }
+
+
+    customTaskElement.appendChild(createIcon("✔️", "complete-icon", () => {
+        completeCustomTask(taskSpan);
+    }));
     customTaskElement.appendChild(taskSpan);
-    customTaskElement.appendChild(createIcon("🗑️", "delete-icon", deleteCustomTask));
     customTaskElement.appendChild(createIcon("✏️", "edit-icon", () => {
         editCustomTask(taskText, customTaskElement);
     }));
-    customTaskElement.appendChild(createIcon("✔️", "complete-icon", () => {
-        completeCustomTask(taskSpan)
-    }));
+    customTaskElement.appendChild(createIcon("🗑️", "delete-icon", deleteCustomTask));
     customTaskList.appendChild(customTaskElement);
 }
+
+
 
 addCustomTaskButton.addEventListener('click', () => {
     const taskText = customTaskInput.value.trim();
@@ -95,3 +128,7 @@ addCustomTaskButton.addEventListener('click', () => {
         AddError.textContent = 'Error insert task name';
     }
 });
+
+
+
+// zrobić error osobny na tą samą nazwę w dodawaniu taska

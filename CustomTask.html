@@ -6,14 +6,79 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .delete-icon, .edit-icon, .complete-icon {
-            cursor: pointer;
-        }
+      
 
         .wrapper {
             display: flex;
             justify-content: center;
+            flex-direction: column;
+            align-items: center;
             margin-top: 5rem;
+        }
+
+        #customTaskInput {
+            width: 75%;
+            padding: 10px;
+            font-size: 1.05rem;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+        }
+
+         #addCustomTask {
+            padding: 10px 20px;
+            font-size: 1.05rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #addCustomTask:hover {
+            background-color: #0056b3; /* Kolor tła po najechaniu myszką */
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .delete-icon, .edit-icon, .complete-icon {
+            cursor: pointer;
+            font-size: 1.15rem;
+        }
+
+        .complete-icon {
+            margin-right: 0.2rem;
+        }
+        ul .task-text {
+            margin-right: 0.5rem;
+            /* ustawić pod przyciskiem add */
+        }
+
+         .custom-task {
+            list-style: none;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .custom-task.completeBackground {
+            background-color: #c0f0c0; /* Kolor tła po oznaczeniu jako ukończone */
+        }
+
+        .custom-task .task-text {
+            flex: 1;
+            font-size: 1.1rem;
+        }
+
+        .custom-task .task-icons {
+            display: flex;
         }
     </style>
 </head>
@@ -27,12 +92,33 @@
     <div class="wrapper">
         <div id="customTasks">
             <h2>Your custom tasks</h2>
+            <input type="text" id="customTaskInput" placeholder="What would you like to do?">
+            <button id="addCustomTask">Add</button>
+            <p class="Add-error err"></p>
             <ul id="customTaskList">
             </ul>
-            <input type="text" id="customTaskInput" placeholder="Add new task">
-            <button id="addCustomTask">Add</button>
         </div>
-        <p class="Add-error err"></p>
+        <!-- <div class="statistics">
+            <p>Liczba ukończonych zadań: <span class="completed-count">0</span></p>
+            <p>Historia: <ul class="history-list">
+            </ul></p>
+            <p>Completed tasks: <span id="completedCount">0</span></p>
+            <h3>Task History</h3>
+            <ul id="taskHistory"></ul>
+        </div> -->
+        <br>
+        <div class="statistics">
+            <h2>Statistics</h2>
+            <p>Completed tasks: <span id="completedCount">0</span></p>
+            <p>Deleted tasks: <span id="deletedCount">0</span></p>
+        </div>
+        
+        <div class="history">
+            <h2>Task History</h2>
+            <ul id="taskHistory">
+                <!-- Historia zadań będzie wyświetlana tutaj -->
+            </ul>
+        </div>
     </div>
     <script src="CustomTask.js"></script>
 </body>
