@@ -1,18 +1,18 @@
-const customTasks = []
+const customTasks = [];
 
 const customTaskInput = document.getElementById("customTaskInput");
 const customTaskList = document.getElementById('customTaskList');
 const addCustomTaskButton = document.getElementById("addCustomTask");
 const AddError = document.querySelector('.Add-error');
-
+const completedCountElement = document.getElementById("completedCount");
+const historyListElement = document.getElementById("taskHistory");
+let completedCustomTasks = [];
+let historyList = [];
 
 function addCustomTaskToList(taskText) {
     const customTaskElement = document.createElement('li');
-    customTaskElement.classList.add('custom-task')
-    const taskSpan = document.createElement('span');
-    taskSpan.classList.add('task-text')
-    taskSpan.textContent = taskText;
-
+    customTaskElement.classList.add('custom-task');
+    
     function createIcon(iconText, iconClass, clickHandler) {
         const icon = document.createElement("span");
         icon.textContent = iconText;
@@ -30,27 +30,27 @@ function addCustomTaskToList(taskText) {
     }
 
     function editCustomTask(oldTaskText, listItem) {
-        let completeIcon = listItem.querySelector(".complete-icon");
-        if (!completeIcon) {
-            completeIcon = createIcon("✔️", "complete-icon", () => {
-                completeCustomTask(completeIcon);
-            });
-            listItem.appendChild(completeIcon);
-        }
-
-        const newTaskText = prompt("Edytuj zadanie:", oldTaskText);
+        const newTaskText = prompt("Edit Task:", oldTaskText);
         if (newTaskText !== null) {
             if (customTasks.includes(newTaskText)) {
-                alert("Zadanie o tej nazwie już istnieje. Proszę wybrać inną nazwę.");
+                alert("Task with this name already exists. Please choose a different name.");
             } else {
                 const taskIndex = customTasks.indexOf(oldTaskText);
                 if (taskIndex !== -1) {
                     customTasks[taskIndex] = newTaskText;
                     listItem.textContent = newTaskText;
-    
+
+                    let completeIcon = listItem.querySelector(".complete-icon");
                     let editIcon = listItem.querySelector(".edit-icon");
                     let deleteIcon = listItem.querySelector(".delete-icon");
-                   
+
+                    if (!completeIcon) {
+                        completeIcon = createIcon("✔️", "complete-icon", () => {
+                            completeCustomTask(taskText, customTaskElement);
+                        });
+                        listItem.insertBefore(completeIcon, listItem.firstChild);
+                    }
+
                     if (!editIcon) {
                         editIcon = createIcon("✏️", "edit-icon", () => {
                             editCustomTask(newTaskText, listItem);
@@ -64,38 +64,53 @@ function addCustomTaskToList(taskText) {
                         });
                         listItem.appendChild(deleteIcon);
                     }
-    
-                    
-
                 }
             }
         }
     }
 
-    let historyList = [];
-    let completedCustomTasks = [];
+    // function completeCustomTask(taskText, listItem) {
+    //     const taskSpan = listItem.querySelector(".task-text");
+    //     if (!completedCustomTasks.includes(taskText)) {
+    //         completedCustomTasks.push(taskText);
+    //         taskSpan.classList.add('completed');
+    //         listItem.classList.add('completeBackground');
+    //         updateCompletedCount();
+    //         displayTaskHistory();
+    //     }
+    // }
+    
 
-    function completeCustomTask(taskSpan) {
-        if (!taskSpan.classList.contains("completed")) {
-            taskSpan.classList.add("completed");
-            customTaskElement.classList.add('completeBackground')
-            historyList.push(taskSpan.textContent);
-            completedCustomTasks.push(taskSpan.textContent);
-
-            updateCompletedCount();
-            displayTaskHistory();
+    function completeCustomTask(taskText, listItem) {
+        const taskSpan = listItem.querySelector(".task-text");
+    
+        if (taskSpan) {
+            const isCompleted = completedCustomTasks.includes(taskText);
+    
+            if (!isCompleted) {
+                completedCustomTasks.push(taskText);
+                taskSpan.classList.add('completed');
+                listItem.classList.add('completeBackground');
+            } else {
+                const taskIndex = completedCustomTasks.indexOf(taskText);
+                if (taskIndex !== -1) {
+                    completedCustomTasks.splice(taskIndex, 1);
+                    taskSpan.classList.remove('completed');
+                    listItem.classList.remove('completeBackground');
+                }
+            }
         }
+    
+        updateCompletedCount();
+        displayTaskHistory();
     }
 
     function updateCompletedCount() {
-        const completedCountElement = document.getElementById("completedCount");
         completedCountElement.textContent = completedCustomTasks.length;
     }
 
     function displayTaskHistory() {
-        const historyListElement = document.getElementById("taskHistory");
         historyListElement.innerHTML = "";
-    
         for (const completedTask of completedCustomTasks) {
             const historyItem = document.createElement("li");
             historyItem.textContent = completedTask;
@@ -103,19 +118,25 @@ function addCustomTaskToList(taskText) {
         }
     }
 
-
     customTaskElement.appendChild(createIcon("✔️", "complete-icon", () => {
-        completeCustomTask(taskSpan);
+        completeCustomTask(taskText, customTaskElement);
     }));
+
+    const taskSpan = document.createElement('span');
+    taskSpan.classList.add('task-text');
+    taskSpan.textContent = taskText;
     customTaskElement.appendChild(taskSpan);
+    customTaskList.appendChild(customTaskElement);
+
     customTaskElement.appendChild(createIcon("✏️", "edit-icon", () => {
         editCustomTask(taskText, customTaskElement);
     }));
-    customTaskElement.appendChild(createIcon("🗑️", "delete-icon", deleteCustomTask));
-    customTaskList.appendChild(customTaskElement);
+    customTaskElement.appendChild(createIcon("🗑️", "delete-icon", () => {
+        deleteCustomTask(taskText);
+        customTaskElement.remove();
+    }));
+  
 }
-
-
 
 addCustomTaskButton.addEventListener('click', () => {
     const taskText = customTaskInput.value.trim();
@@ -128,7 +149,3 @@ addCustomTaskButton.addEventListener('click', () => {
         AddError.textContent = 'Error insert task name';
     }
 });
-
-
-
-// zrobić error osobny na tą samą nazwę w dodawaniu taska
