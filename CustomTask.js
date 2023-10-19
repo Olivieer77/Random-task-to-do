@@ -36,7 +36,10 @@ function editCustomTask(oldTaskText, listItem) {
             if (taskIndex !== -1) {
                 customTasks[taskIndex] = newTaskText;
                 listItem.querySelector(".task-text").textContent = newTaskText;
+
+                historyList = historyList.map(task => task === oldTaskText ? newTaskText : task);
                 updateCompletedCount();
+                displayTaskHistory()
             }
         }
     }

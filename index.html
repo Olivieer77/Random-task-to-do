@@ -78,6 +78,14 @@
     display: inline-block;
 }
 
+.task {
+    cursor: pointer;
+}
+
+.complete-task {
+    cursor: pointer;
+}
+
     </style>
 </head>
 <body>
@@ -96,14 +104,25 @@
         <div class="category-list">
             <button class="category-button" data-category="fitness">Fitness</button>
             <button class="category-button" data-category="creativity">Creativity</button>
-            <button class="category-button" data-category="rest">Rest</button>
+            <button class="category-button" data-category="relax">Relax</button>
             <button class="category-button" data-category="study">Study</button>
          </div>
         <div class="rolledRandomTask">
             <p class="description-paragraph">Rolled task:</p>
-            <p class="task">  </p>
+            <p class="task"></p>
+            <p class="complete-task">✔️</p>
             <button id="shareButton">Share</button>
-            <button class="complete-button">Complete</button>
+        </div>
+        <div class="statistics">
+            <h2>Statistics</h2>
+            <p>Completed tasks: <span id="completedCount">0</span></p>
+        </div>
+        
+        <div class="history">
+            <h2>Task History</h2>
+            <ul id="taskHistory">
+                
+            </ul>
         </div>
     </div>
 
