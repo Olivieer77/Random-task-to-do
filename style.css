@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 * { 
     padding: 0;
     margin: 0;
@@ -35,4 +37,31 @@ nav ul li a {
 
 .err {
     color: red;
+}
+
+.statistics {
+    margin-top: 1.5rem;
+    border-top: 1px solid #ccc;
+    padding-top: 1rem;
+}
+
+.statistics h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.statistics p {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.history {
+    margin-top: 1rem;
+    padding: 0;
+    list-style: none;
+}
+
+.history li {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
 }
