@@ -1,5 +1,7 @@
 const customTasks = [];
 const completedCustomTasks = [];
+let deletedCount = 0;
+const deletedCountElement = document.getElementById("deletedTaskCount");
 const historyList = [];
 const customTaskInput = document.getElementById("customTaskInput");
 const customTaskList = document.getElementById('customTaskList');
@@ -17,11 +19,13 @@ function createIcon(iconText, iconClass, clickHandler) {
 }
 
 function deleteCustomTask(taskText, listItem) {
-    const taskIndex = customTasks.indexOf(taskText);
+    let taskIndex = customTasks.indexOf(taskText);
     if (taskIndex !== -1) {
         customTasks.splice(taskIndex, 1);
         listItem.remove();
         updateCompletedCount();
+        deletedCount++; 
+        deletedCountElement.textContent = deletedCount;
         displayTaskHistory();
     }
 }
@@ -38,8 +42,8 @@ function editCustomTask(oldTaskText, listItem) {
                 listItem.querySelector(".task-text").textContent = newTaskText;
 
                 historyList = historyList.map(task => task === oldTaskText ? newTaskText : task);
-                updateCompletedCount();
                 displayTaskHistory()
+                updateCompletedCount();
             }
         }
     }
@@ -99,8 +103,12 @@ function addCustomTaskToList(taskText) {
 
         customTaskInput.value = "";
         AddError.textContent = '';
-    } else {
-        AddError.textContent = 'Error insert task name';
+    } else if(customTasks.includes(taskText)) {
+        AddError.textContent = 'This task name already exist';
+    } 
+    
+    else {
+        AddError.textContent = 'Insert task name';
     }
 }
 

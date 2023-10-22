@@ -1,7 +1,7 @@
 const tasks = {
     all: [
-        "train for 1 hour.",
-        "stretch for 30 minutes.",
+        "Train for 1 hour.",
+        "Stretch for 30 minutes.",
         "Visit the gym.",
         "Bike for an hour.",
         "Do 30 minutes of cardio exercises.",
@@ -40,8 +40,8 @@ const tasks = {
     ],
 
      fitness:  [
-        "train for 1 hour.",
-        "stretch for 30 minutes.",
+        "Train for 1 hour.",
+        "Stretch for 30 minutes.",
         "Visit the gym.",
         "Bike for an hour.",
         "Do 30 minutes of cardio exercises.",
@@ -54,7 +54,6 @@ const tasks = {
     
      creativity:  [
         "Draw for 30 minutes.",
-        "Posprzątaj swój pokój.",
         "Photograph nature.",
         "Graphic design.",
         "Keep a record of your ideas.",
